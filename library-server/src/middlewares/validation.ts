@@ -9,11 +9,9 @@ export function ValidateSchema(schema: ObjectSchema) {
 			await schema.validateAsync(req.body);
 			next();
 		} catch (error) {
-			return res
-				.status(422)
-				.json({
-					message: 'Object validation failed, please include a valid object',
-				});
+			return res.status(422).json({
+				message: 'Object validation failed, please include a valid object',
+			});
 		}
 	};
 }
@@ -24,6 +22,12 @@ export const Schemas = {
 			type: Joi.string().valid('ADMIN', 'EMPLOYEE', 'PATRON').required(),
 			firstName: Joi.string().required(),
 			lastName: Joi.string().required(),
+			email: Joi.string()
+				.regex(/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/)
+				.required(),
+			password: Joi.string().required(),
+		}),
+		login: Joi.object<{ email: string; password: string }>({
 			email: Joi.string()
 				.regex(/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/)
 				.required(),

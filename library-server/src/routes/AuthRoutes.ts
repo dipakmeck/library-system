@@ -10,4 +10,10 @@ router.post(
 	AuthController.handleRegister,
 );
 
+router.post(
+	'/login',
+	ValidateSchema(Schemas.user.login),
+	AuthController.handleLogin,
+);
+
 export = router;
